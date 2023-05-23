@@ -23,7 +23,7 @@ public class GuiProduto extends javax.swing.JFrame {
         lblDescricao = new javax.swing.JLabel();
         txtDescricao = new javax.swing.JTextField();
         lblQtde = new javax.swing.JLabel();
-        txtQtdeDisponivel = new javax.swing.JTextField();
+        txtQtde = new javax.swing.JTextField();
         lblPreco = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
         lblEstoque = new javax.swing.JLabel();
@@ -48,7 +48,7 @@ public class GuiProduto extends javax.swing.JFrame {
         lblQtde.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblQtde.setText("Qtde disponível");
 
-        txtQtdeDisponivel.setEnabled(false);
+        txtQtde.setEnabled(false);
 
         lblPreco.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblPreco.setText("Preço unitário");
@@ -99,7 +99,7 @@ public class GuiProduto extends javax.swing.JFrame {
                         .addComponent(btnConsultar)
                         .addGap(18, 18, 18)
                         .addComponent(btnIncluir)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAlterar)
                         .addGap(18, 18, 18)
                         .addComponent(btnExcluir)
@@ -114,7 +114,7 @@ public class GuiProduto extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtQtdeDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblPreco)
                                 .addGap(18, 18, 18)
@@ -142,7 +142,7 @@ public class GuiProduto extends javax.swing.JFrame {
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtQtdeDisponivel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblQtde)
                     .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPreco)
@@ -182,6 +182,6 @@ public class GuiProduto extends javax.swing.JFrame {
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextField txtEstoque;
     private javax.swing.JTextField txtPreco;
-    private javax.swing.JTextField txtQtdeDisponivel;
+    private javax.swing.JTextField txtQtde;
     // End of variables declaration//GEN-END:variables
 }
