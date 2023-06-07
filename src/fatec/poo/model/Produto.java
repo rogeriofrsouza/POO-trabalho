@@ -53,4 +53,9 @@ public class Produto {
     public double getEstoqueMinimo() {
         return estoqueMinimo;
     }
+    
+      public String getCodigo() {
+        return codigo;
+    }
+
 }
