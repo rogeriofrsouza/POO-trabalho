@@ -134,48 +134,52 @@ public class GuiProduto extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(lblCodigo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnConsultar)
-                        .addGap(20, 20, 20)
-                        .addComponent(btnIncluir)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnAlterar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExcluir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(lblPreco)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDescricao)
-                            .addComponent(lblUnidadeMedida))
-                        .addGap(50, 50, 50)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblQtde)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(lblEstoque)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(266, 266, 266))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .addComponent(txtUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(76, 76, 76)
+                                .addComponent(lblCodigo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblQtde)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblEstoque)
+                                        .addComponent(btnConsultar)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnSair))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblPreco)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(btnIncluir)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnAlterar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnExcluir)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnSair))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblDescricao, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblUnidadeMedida, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAlterar, btnConsultar, btnExcluir, btnIncluir, btnSair});
@@ -183,46 +187,40 @@ public class GuiProduto extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCodigo)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescricao)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEstoque)
                     .addComponent(txtEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUnidadeMedida)
                     .addComponent(txtUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblQtde))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblPreco)))
-                .addGap(16, 16, 16)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConsultar)
-                    .addComponent(btnIncluir)
+                    .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblQtde)
+                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPreco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAlterar)
+                    .addComponent(btnIncluir)
+                    .addComponent(btnConsultar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSair))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAlterar, btnConsultar, btnExcluir, btnIncluir, btnSair});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        dispose();
-    }//GEN-LAST:event_btnSairActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conexao = new Conexao();
@@ -233,49 +231,6 @@ public class GuiProduto extends javax.swing.JFrame {
         conexao.fecharConexao();
         dispose();
     }//GEN-LAST:event_formWindowClosed
-
-    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        setCodigo();
-        if (this.codigo > 0){
-            produto = daoProduto.consultar(String.valueOf(this.codigo));
-
-            if (produto == null){
-
-               btnConsultar.setEnabled(false);
-               btnIncluir.setEnabled(true);
-               btnAlterar.setEnabled(false);
-               btnExcluir.setEnabled(false);
-
-               txtCodigo.setEditable(false);
-               txtDescricao.setEnabled(true);
-               txtDescricao.requestFocus();
-               txtQtde.setEnabled(true);
-               txtPreco.setEnabled(true);
-               txtUnidadeMedida.setEnabled(true);
-               txtEstoque.setEnabled(true);
-            }
-            else {
-               btnConsultar.setEnabled(false);
-               btnIncluir.setEnabled(false);
-               btnAlterar.setEnabled(true);
-               btnExcluir.setEnabled(true);
-
-
-               txtCodigo.setEditable(false);
-               txtDescricao.setEnabled(true);
-               txtDescricao.setText(produto.getDescricao());
-               txtDescricao.requestFocus();
-               txtUnidadeMedida.setEnabled(true);
-               txtUnidadeMedida.setText(produto.getUnidadeMedida());
-               txtQtde.setEnabled(true);
-               txtQtde.setText(String.valueOf(produto.getQtdeEstoque()));
-               txtPreco.setEnabled(true);
-               txtPreco.setText(String.valueOf(produto.getPreco()));
-               txtEstoque.setEnabled(true);
-               txtEstoque.setText(String.valueOf(produto.getEstoqueMinimo()));
-            }
-        }
-    }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
         setProduto();
@@ -290,10 +245,57 @@ public class GuiProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        setProduto();
-        daoProduto.excluir(produto);
+        if (produto != null) {
+            daoProduto.excluir(produto);
+        }
+        
         zeraFormulario();
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        validarCodigo();
+
+        if (codigo > 0) {
+            produto = daoProduto.consultar(String.valueOf(codigo));
+
+            if (produto == null) {
+                btnConsultar.setEnabled(false);
+                btnIncluir.setEnabled(true);
+                btnAlterar.setEnabled(false);
+                btnExcluir.setEnabled(false);
+
+                txtCodigo.setEditable(false);
+                txtDescricao.setEnabled(true);
+                txtDescricao.requestFocus();
+                txtQtde.setEnabled(true);
+                txtPreco.setEnabled(true);
+                txtUnidadeMedida.setEnabled(true);
+                txtEstoque.setEnabled(true);
+            } else {
+                btnConsultar.setEnabled(false);
+                btnIncluir.setEnabled(false);
+                btnAlterar.setEnabled(true);
+                btnExcluir.setEnabled(true);
+
+                txtCodigo.setEditable(false);
+                txtDescricao.setEnabled(true);
+                txtDescricao.setText(produto.getDescricao());
+                txtDescricao.requestFocus();
+                txtUnidadeMedida.setEnabled(true);
+                txtUnidadeMedida.setText(produto.getUnidadeMedida());
+                txtQtde.setEnabled(true);
+                txtQtde.setText(String.valueOf(produto.getQtdeEstoque()));
+                txtPreco.setEnabled(true);
+                txtPreco.setText(String.valueOf(produto.getPreco()));
+                txtEstoque.setEnabled(true);
+                txtEstoque.setText(String.valueOf(produto.getEstoqueMinimo()));
+            }
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
@@ -314,53 +316,59 @@ public class GuiProduto extends javax.swing.JFrame {
     private javax.swing.JTextField txtQtde;
     private javax.swing.JTextField txtUnidadeMedida;
     // End of variables declaration//GEN-END:variables
+    
     private Conexao conexao;
-    private DaoProduto daoProduto ;
+    private DaoProduto daoProduto;
     private Produto produto;
     private int codigo;
-    
-    private void setCodigo(){
-         try {
-            this.codigo = Integer.parseInt(txtCodigo.getText());
-         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null,"Verifique o código do produto informado, código não é um número", "Código Inválido",JOptionPane.ERROR_MESSAGE);
-            txtCodigo.requestFocus();
+
+    private void validarCodigo() {
+        try {
+            codigo = Integer.parseInt(txtCodigo.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Verifique o código do produto informado, código não é um número", "Código Inválido", JOptionPane.ERROR_MESSAGE);
             txtCodigo.setText(null);
-            codigo=0;
+            txtCodigo.requestFocus();
+            codigo = 0;
+            System.out.println(e.getMessage());
         }
     }
+
     private void setProduto() {
-        if (this.codigo > 0){
-            produto = new Produto(String.valueOf(this.codigo), txtDescricao.getText());
+        if (codigo > 0) {
+            produto = new Produto(String.valueOf(codigo), txtDescricao.getText());
             produto.setUnidadeMedida(txtUnidadeMedida.getText());
             produto.setPreco(Double.parseDouble(txtPreco.getText()));
             produto.setQtdeEstoque(Double.parseDouble(txtQtde.getText()));
             produto.setEstoqueMinimo(Double.parseDouble(txtEstoque.getText()));
         }
-       
     }
-    
-    private void zeraFormulario(){
+
+    private void zeraFormulario() {
         btnConsultar.setEnabled(true);
         btnIncluir.setEnabled(false);
         btnAlterar.setEnabled(false);
         btnExcluir.setEnabled(false);
-        
+
         txtCodigo.setEnabled(true);
         txtCodigo.setText(null);
         txtCodigo.requestFocus();
         txtCodigo.setEditable(true);
+        
         txtDescricao.setEnabled(false);
         txtDescricao.setText(null);
         txtUnidadeMedida.setEnabled(false);
         txtUnidadeMedida.setText(null);
+        
         txtQtde.setEnabled(false);
         txtQtde.setText(null);
         txtPreco.setEnabled(false);
         txtPreco.setText(null);
+        
         txtEstoque.setEnabled(false);
         txtEstoque.setText(null);
-       
-        produto=null;
+
+        produto = null;
+        codigo = 0;
     }
 }

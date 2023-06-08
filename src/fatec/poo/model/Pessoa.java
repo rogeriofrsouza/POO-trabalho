@@ -16,58 +16,6 @@ public class Pessoa {
         this.nome = nome;
     }
     
-    public static boolean isCPF(String cpf){
-        char dig10, dig11;
-        int sm, i, r, num, peso;
-        //Elimina sequencias diferente de 11 digitos
-        if (cpf.length()!= 11)
-                return false;
-        
-        //Elimina os número com mesma sequencia
-        else if (cpf.equals("00000000000") ||
-            cpf.equals("11111111111") ||
-            cpf.equals("22222222222") ||
-            cpf.equals("33333333333") ||
-            cpf.equals("44444444444") ||
-            cpf.equals("55555555555") ||
-            cpf.equals("66666666666") ||
-            cpf.equals("77777777777") ||
-            cpf.equals("88888888888") ||
-            cpf.equals("99999999999"))
-                return false;
-        else {
-            sm = 0;
-            peso = 10;
-            for (i=0; i<9; i++) {
-                num = (int)(cpf.charAt(i) - 48);
-                sm += (num * peso);
-                peso--;
-            }
-            
-            r = 11 - (sm % 11);
-            if ((r == 10) || (r == 11))
-                dig10 = '0';
-            else dig10 = (char)(r + 48);
-            
-            sm = 0;
-            peso = 11;
-            for(i=0; i<10; i++) {
-            num = (int)(cpf.charAt(i) - 48);
-            sm = sm + (num * peso);
-            peso = peso - 1;
-            }
-
-            r = 11 - (sm % 11);
-            if ((r == 10) || (r == 11))
-                 dig11 = '0';
-            else dig11 = (char)(r + 48);
-            
-            if ((dig10 == cpf.charAt(9)) && (dig11 == cpf.charAt(10)))
-                 return true;
-            else return false;
-        }
-
-    }
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
@@ -122,5 +70,62 @@ public class Pessoa {
 
     public String getTelefone() {
         return telefone;
+    }
+
+    public static boolean validarCpf(String cpf) {
+        // Elimina sequencias diferente de 11 digitos
+        if (cpf.length() != 11) {
+            return false;
+        }
+        
+        // Elimina os números com mesma sequencia
+        int aux = cpf.charAt(0);
+        boolean isEqual = true;
+        
+        for (int i = 1; i < cpf.length(); i++) {
+            if (aux != cpf.charAt(i)) {
+                isEqual = false;
+                break;
+            }
+        }
+        
+        if (isEqual) {
+            return false;
+        }
+        
+        // https://www.devmedia.com.br/validar-cpf-com-javascript/23916
+        // Cálculo do 1º Dígito Verificador
+        int peso = 10;
+        int soma = 0;
+        
+        for (int i = 0; i < 9; i++) {
+            soma += (cpf.charAt(i) - '0') * (peso);
+            peso--;
+        }
+        
+        soma = (soma * 10) % 11;
+        int dig1 = (soma >= 10) ? 0 : soma;
+        
+        if (dig1 != cpf.charAt(9) - '0') {
+            return false;
+        }
+        
+        // Cálculo do 2º Dígito Verificador
+        peso = 11;
+        soma = 0;
+        
+        for (int i = 0; i < 10; i++) {
+            soma += (cpf.charAt(i) - '0') * peso;
+            peso--;
+        }
+
+        soma = (soma * 10) % 11;
+        int dig2 = (soma >= 10) ? 0 : soma;
+
+        if (dig2 != cpf.charAt(10) - '0') {
+            return false;
+        }
+        
+        return true;
     }
 }
