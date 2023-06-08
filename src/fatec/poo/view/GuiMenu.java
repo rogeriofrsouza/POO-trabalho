@@ -74,6 +74,11 @@ public class GuiMenu extends javax.swing.JFrame {
         menuPedido.setText("Pedido");
 
         menuItemEmitirPedido.setText("Emitir pedido");
+        menuItemEmitirPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemEmitirPedidoActionPerformed(evt);
+            }
+        });
         menuPedido.add(menuItemEmitirPedido);
 
         jMenuBar1.add(menuPedido);
@@ -109,6 +114,10 @@ public class GuiMenu extends javax.swing.JFrame {
     private void menuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairActionPerformed
         dispose();
     }//GEN-LAST:event_menuItemSairActionPerformed
+
+    private void menuItemEmitirPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEmitirPedidoActionPerformed
+        new GuiEmitirPedido().setVisible(true);
+    }//GEN-LAST:event_menuItemEmitirPedidoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
