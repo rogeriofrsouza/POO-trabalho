@@ -4,11 +4,20 @@ import fatec.poo.control.Conexao;
 import fatec.poo.control.DaoCliente;
 import fatec.poo.control.DaoItemPedido;
 import fatec.poo.control.DaoPedido;
+import fatec.poo.control.DaoProduto;
+import fatec.poo.control.DaoVendedor;
 import fatec.poo.model.Cliente;
 import fatec.poo.model.ItemPedido;
 import fatec.poo.model.Pedido;
 import fatec.poo.model.Pessoa;
+import fatec.poo.model.Produto;
+import fatec.poo.model.Vendedor;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class GuiEmitirPedido extends javax.swing.JFrame {
 
@@ -28,12 +37,13 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNumPedido = new javax.swing.JTextField();
         btnConsultarPedido = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        fmtTxtDataPedido = new javax.swing.JFormattedTextField();
+        txtDataPedido = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         rdbAVista = new javax.swing.JRadioButton();
         rdbAPrazo = new javax.swing.JRadioButton();
@@ -41,17 +51,17 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         fmtTxtCpfCliente = new javax.swing.JFormattedTextField();
         btnConsultarCliente = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtNomeCliente = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         fmtTxtCpfVendedor = new javax.swing.JFormattedTextField();
         btnConsultarVendedor = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtNomeVendedor = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtCodigoProduto = new javax.swing.JTextField();
         btnConsultarProduto = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtDescricaoProduto = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtQtdeVendida = new javax.swing.JTextField();
         btnAdicionarItem = new javax.swing.JButton();
@@ -93,19 +103,16 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
         jLabel2.setText("Data do Pedido");
 
-        try {
-            fmtTxtDataPedido.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fmtTxtDataPedido.setEnabled(false);
+        txtDataPedido.setEnabled(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
 
+        buttonGroup1.add(rdbAVista);
         rdbAVista.setSelected(true);
         rdbAVista.setText("A Vista");
         rdbAVista.setEnabled(false);
 
+        buttonGroup1.add(rdbAPrazo);
         rdbAPrazo.setText("A Prazo");
         rdbAPrazo.setEnabled(false);
 
@@ -144,7 +151,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fmtTxtDataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -156,11 +163,11 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(fmtTxtDataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDataPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnConsultarPedido)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(txtNumPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnConsultarPedido))
+                        .addComponent(txtNumPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -179,8 +186,13 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         btnConsultarCliente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultarCliente.setEnabled(false);
+        btnConsultarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarClienteActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setEnabled(false);
+        txtNomeCliente.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -194,7 +206,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(btnConsultarCliente)
                 .addGap(19, 19, 19)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -202,7 +214,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsultarCliente)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
@@ -224,8 +236,13 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         btnConsultarVendedor.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultarVendedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultarVendedor.setEnabled(false);
+        btnConsultarVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarVendedorActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setEnabled(false);
+        txtNomeVendedor.setEnabled(false);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -239,7 +256,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnConsultarVendedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtNomeVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -247,7 +264,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConsultarVendedor)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
@@ -264,22 +281,35 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         btnConsultarProduto.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnConsultarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/pesq.png"))); // NOI18N
         btnConsultarProduto.setEnabled(false);
+        btnConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarProdutoActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setEnabled(false);
+        txtDescricaoProduto.setEnabled(false);
 
         jLabel6.setText("Qtde Vendida");
-
-        txtQtdeVendida.setEnabled(false);
 
         btnAdicionarItem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAdicionarItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnAdicionarItem.setText("Adicionar Item");
         btnAdicionarItem.setEnabled(false);
+        btnAdicionarItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarItemActionPerformed(evt);
+            }
+        });
 
         btnRemoverItem.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnRemoverItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/rem.png"))); // NOI18N
         btnRemoverItem.setText("Remover Item");
         btnRemoverItem.setEnabled(false);
+        btnRemoverItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverItemActionPerformed(evt);
+            }
+        });
 
         tblItensPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -335,7 +365,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(btnConsultarProduto)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -362,7 +392,7 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
                         .addComponent(txtQtdeVendida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnConsultarProduto)
@@ -390,6 +420,11 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         btnIncluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/add.png"))); // NOI18N
         btnIncluir.setText("Incluir");
         btnIncluir.setEnabled(false);
+        btnIncluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fatec/poo/view/icon/Alterar.png"))); // NOI18N
@@ -455,6 +490,12 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         conexao = new Conexao();
         daoPedido = new DaoPedido(conexao.conectar());
+        daoCliente = new DaoCliente(conexao.conectar());
+        daoVendedor = new DaoVendedor(conexao.conectar());
+        daoProduto = new DaoProduto(conexao.conectar());
+        daoItemPedido = new DaoItemPedido(conexao.conectar());
+
+        dtmItensPedido = (DefaultTableModel) tblItensPedido.getModel();
     }//GEN-LAST:event_formWindowOpened
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -467,27 +508,216 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
 
         if (numeroPedido > 0) {
             pedido = daoPedido.consultar(String.valueOf(numeroPedido));
-            
+
             if (pedido == null) {
                 txtNumPedido.setEditable(false);
                 btnConsultarPedido.setEnabled(false);
-                
-                fmtTxtDataPedido.setEnabled(true);
+
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                txtDataPedido.setText(fmt.format(LocalDate.now()));
+
                 rdbAVista.setEnabled(true);
                 rdbAPrazo.setEnabled(true);
-                
+
                 fmtTxtCpfCliente.setEnabled(true);
+                fmtTxtCpfCliente.requestFocus();
+                btnConsultarCliente.setEnabled(true);
             } else {
                 txtNumPedido.setEditable(false);
                 btnConsultarPedido.setEnabled(false);
-                
+
                 txtCodigoProduto.setEnabled(true);
-                
+
                 btnAlterar.setEnabled(true);
                 btnExcluir.setEnabled(true);
             }
         }
     }//GEN-LAST:event_btnConsultarPedidoActionPerformed
+
+    private void btnConsultarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarClienteActionPerformed
+        validarCpf(1);
+
+        if (cpfCliente != null) {
+            cliente = daoCliente.consultar(cpfCliente);
+
+            if (cliente != null) {
+                txtNomeCliente.setText(cliente.getNome());
+                fmtTxtCpfCliente.setEditable(false);
+                btnConsultarCliente.setEnabled(false);
+
+                fmtTxtCpfVendedor.setEnabled(true);
+                fmtTxtCpfVendedor.requestFocus();
+                btnConsultarVendedor.setEnabled(true);
+
+                pedido = new Pedido(txtNumPedido.getText(), txtDataPedido.getText());
+                cliente.addPedido(pedido);
+                pedido.setFormaPagto(rdbAPrazo.isSelected());
+            } else {
+                JOptionPane.showMessageDialog(null, "Cliente não encontrado, verifique os dados digitados", "Cliente Inválido", JOptionPane.ERROR_MESSAGE);
+                fmtTxtCpfCliente.setValue(null);
+                fmtTxtCpfCliente.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_btnConsultarClienteActionPerformed
+
+    private void btnConsultarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarVendedorActionPerformed
+        validarCpf(2);
+
+        if (cpfVendedor != null) {
+            vendedor = daoVendedor.consultar(cpfVendedor);
+
+            if (vendedor != null) {
+                txtNomeVendedor.setText(vendedor.getNome());
+                fmtTxtCpfVendedor.setEditable(false);
+                btnConsultarVendedor.setEnabled(false);
+
+                txtCodigoProduto.setEnabled(true);
+                txtCodigoProduto.requestFocus();
+                btnConsultarProduto.setEnabled(true);
+
+                vendedor.addPedido(pedido);
+            } else {
+                JOptionPane.showMessageDialog(null, "Vendedor não encontrado, verifique os dados digitados", "Vendedor Inválido", JOptionPane.ERROR_MESSAGE);
+                fmtTxtCpfVendedor.setText(null);
+                fmtTxtCpfVendedor.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_btnConsultarVendedorActionPerformed
+
+    private void btnConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarProdutoActionPerformed
+        validarCodigoProduto();
+
+        if (codigoProduto > 0) {
+            produto = daoProduto.consultar(String.valueOf(codigoProduto));
+
+            if (produto != null) {
+                txtDescricaoProduto.setEditable(false);
+                txtDescricaoProduto.setText(produto.getDescricao());
+
+                txtQtdeVendida.setEnabled(true);
+                txtQtdeVendida.requestFocus();
+
+                btnAdicionarItem.setEnabled(true);
+                btnRemoverItem.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_btnConsultarProdutoActionPerformed
+
+    private void btnAdicionarItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarItemActionPerformed
+        double qtdeVendida = Double.parseDouble(txtQtdeVendida.getText());
+
+        if (qtdeVendida <= 0.0) {
+            JOptionPane.showMessageDialog(null, "Quantidade vendida não pode ser igual ou menor a 0", "Quantidade inválida", JOptionPane.ERROR_MESSAGE);
+            txtQtdeVendida.requestFocus();
+            return;
+        }
+
+        if (produto.getQtdeEstoque() < qtdeVendida) {
+            JOptionPane.showMessageDialog(null, "Quantidade em estoque é inferior a quantidade solicitada", "Quantidade inválida", JOptionPane.ERROR_MESSAGE);
+            txtQtdeVendida.requestFocus();
+            return;
+        }
+        
+        boolean containsPedido = false;
+        double valorTotal = (txtValorTotalPedido.getText().length() > 0) ? Double.parseDouble(txtValorTotalPedido.getText()) : 0.0;
+        
+        for (int i = 0; i < dtmItensPedido.getRowCount(); i++) {
+            String codProd = String.valueOf(dtmItensPedido.getValueAt(i, 0));
+
+            if (produto.getCodigo().equals(codProd)) {
+                double qtde = Double.parseDouble(dtmItensPedido.getValueAt(i, 3).toString());
+                qtde += qtdeVendida;
+                
+                dtmItensPedido.setValueAt(qtde, i, 3);
+                valorTotal -= Double.parseDouble(String.valueOf(dtmItensPedido.getValueAt(i, 4)));
+                dtmItensPedido.setValueAt(String.format("%.2f", qtde * produto.getPreco()), i, 4);
+                valorTotal += qtde * produto.getPreco();
+                        
+                for (ItemPedido ip : pedido.getItems()) {
+                    if (ip.getProduto().getCodigo().equals(codProd)) {
+                        itemPedido = ip;
+                        itemPedido.setQtdeVendida(qtde);
+                        containsPedido = true;
+                    }
+                }
+            }
+        }
+        
+        double subTotal = qtdeVendida * produto.getPreco();
+        
+        if (!containsPedido) {
+            itemPedido = new ItemPedido(null, qtdeVendida, produto);
+            valorTotal += subTotal;
+        }
+        
+        if (subTotal > cliente.getLimiteDisp()) {
+            JOptionPane.showMessageDialog(null, "Valor do Item de Pedido não é compatível com o limite disponível do Cliente", "Valor inválido", JOptionPane.ERROR_MESSAGE);
+            txtQtdeVendida.requestFocus();
+            return;
+        }
+        
+        cliente.setLimiteDisp(cliente.getLimiteDisp() - subTotal);
+        daoCliente.alterar(cliente);
+        txtValorTotalPedido.setText(String.format("%.2f", valorTotal));
+        
+        if (!containsPedido) {
+            int qtdeItensPedido = (txtQtdeItensPedido.getText().length() > 0) ? Integer.parseInt(txtQtdeItensPedido.getText()) + 1 : 1;
+            txtQtdeItensPedido.setText(String.valueOf(qtdeItensPedido));
+   
+            String[] linha = new String[5];
+            linha[0] = produto.getCodigo();
+            linha[1] = produto.getDescricao();
+            linha[2] = String.valueOf(produto.getPreco());
+            linha[3] = String.valueOf(qtdeVendida);
+            linha[4] = String.valueOf(qtdeVendida * produto.getPreco());
+            dtmItensPedido.addRow(linha);
+        }
+        
+        daoProduto.alterar(produto);
+        itemPedido.setProduto(produto);
+        pedido.addItem(itemPedido);
+        
+        txtCodigoProduto.setText(null);
+        txtCodigoProduto.requestFocus();
+        btnConsultarProduto.setEnabled(true);
+        txtDescricaoProduto.setText(null);
+        txtDescricaoProduto.setEnabled(false);
+        txtQtdeVendida.setText(null);
+        txtQtdeVendida.setEnabled(false);
+        
+        btnIncluir.setEnabled(true);
+    }//GEN-LAST:event_btnAdicionarItemActionPerformed
+
+    private void btnRemoverItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverItemActionPerformed
+        if (tblItensPedido.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Opção para deleção inválida", "Item de Pedido inválido", JOptionPane.ERROR_MESSAGE);
+        } else {
+            if (txtValorTotalPedido.getText().length() > 0) {
+                double valorTotal = Double.parseDouble(txtValorTotalPedido.getText());
+                int row = tblItensPedido.getSelectedRow();
+                double subTotal = Double.parseDouble(String.valueOf(tblItensPedido.getValueAt(row, 4)));
+                
+                valorTotal -= subTotal;
+                txtValorTotalPedido.setText(String.valueOf(valorTotal));
+                
+                int qtdeItens = Integer.parseInt(txtQtdeItensPedido.getText());
+                qtdeItens -= 1;
+                txtQtdeItensPedido.setText(String.valueOf(qtdeItens));
+            }
+            
+            dtmItensPedido.removeRow(tblItensPedido.getSelectedRow());
+        }
+    }//GEN-LAST:event_btnRemoverItemActionPerformed
+
+    private void btnIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirActionPerformed
+        daoPedido.inserir(pedido);
+        
+        for (ItemPedido ip : pedido.getItems()) {
+            daoItemPedido.inserir(itemPedido);
+        }
+        
+        btnIncluir.setEnabled(false);
+    }//GEN-LAST:event_btnIncluirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarItem;
@@ -500,9 +730,9 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private javax.swing.JButton btnIncluir;
     private javax.swing.JButton btnRemoverItem;
     private javax.swing.JButton btnSair;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JFormattedTextField fmtTxtCpfCliente;
     private javax.swing.JFormattedTextField fmtTxtCpfVendedor;
-    private javax.swing.JFormattedTextField fmtTxtDataPedido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -517,23 +747,38 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JRadioButton rdbAPrazo;
     private javax.swing.JRadioButton rdbAVista;
     private javax.swing.JTable tblItensPedido;
     private javax.swing.JTextField txtCodigoProduto;
+    private javax.swing.JTextField txtDataPedido;
+    private javax.swing.JTextField txtDescricaoProduto;
+    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtNomeVendedor;
     private javax.swing.JTextField txtNumPedido;
     private javax.swing.JTextField txtQtdeItensPedido;
     private javax.swing.JTextField txtQtdeVendida;
     private javax.swing.JTextField txtValorTotalPedido;
     // End of variables declaration//GEN-END:variables
-    
+
     private Conexao conexao;
     private DaoPedido daoPedido;
+    private DaoCliente daoCliente;
+    private DaoVendedor daoVendedor;
+    private DaoProduto daoProduto;
+    private DaoItemPedido daoItemPedido;
+
     private Pedido pedido;
+    private Cliente cliente;
+    private Vendedor vendedor;
+    private Produto produto;
+    private ItemPedido itemPedido;
+
     private int numeroPedido;
+    private int codigoProduto;
+    private String cpfCliente;
+    private String cpfVendedor;
+    private DefaultTableModel dtmItensPedido;
 
     private void validarNumeroPedido() {
         try {
@@ -547,39 +792,64 @@ public class GuiEmitirPedido extends javax.swing.JFrame {
         }
     }
 
-//    private void zeraFormulario() {
-//        btnConsultar.setEnabled(true);
-//        btnIncluir.setEnabled(false);
-//        btnAlterar.setEnabled(false);
-//        btnExcluir.setEnabled(false);
-//
-//        fmtTxtCpf.setEnabled(true);
-//        fmtTxtCpf.requestFocus();
-//        fmtTxtCpf.setValue(null);
-//        fmtTxtCpf.setEditable(true);
-//        
-//        txtNome.setEnabled(false);
-//        txtNome.setText(null);
-//        txtEndereco.setEnabled(false);
-//        txtEndereco.setText(null);
-//
-//        txtCidade.setEnabled(false);
-//        txtCidade.setText(null);
-//        cbxUf.setEnabled(false);
-//        cbxUf.setSelectedIndex(-1);
-//
-//        txtDdd.setEnabled(false);
-//        txtDdd.setText(null);
-//        txtTelefone.setEnabled(false);
-//        txtTelefone.setText(null);
-//
-//        txtCep.setEnabled(false);
-//        txtCep.setText(null);
-//        txtLimiteCredito.setEnabled(false);
-//        txtLimiteCredito.setText(null);
-//        lblLimiteDisponivel.setText(null);
-//        
-//        cliente = null;
-//        cpf = null;
-//    }
+    private void validarCpf(int t) {
+        String cpf;
+
+        if (t == 1) {
+            cpfCliente = fmtTxtCpfCliente.getText().replace(".", "").replace("-", "");
+            cpf = cpfCliente;
+        } else {
+            cpfVendedor = fmtTxtCpfVendedor.getText().replace(".", "").replace("-", "");
+            cpf = cpfVendedor;
+        }
+
+        if (!Pessoa.validarCpf(cpf)) {
+            JOptionPane.showMessageDialog(null, "Verifique o CPF digitado", "CPF Inválido", JOptionPane.ERROR_MESSAGE);
+
+            if (t == 1) {
+                fmtTxtCpfCliente.setValue(null);
+                fmtTxtCpfCliente.requestFocus();
+                cpfCliente = null;
+            } else {
+                fmtTxtCpfVendedor.setValue(null);
+                fmtTxtCpfVendedor.requestFocus();
+                cpfVendedor = null;
+            }
+        }
+    }
+
+    private void validarCodigoProduto() {
+        try {
+            codigoProduto = Integer.parseInt(txtCodigoProduto.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Verifique o código do produto digitado, código não é um número", "Código Inválido", JOptionPane.ERROR_MESSAGE);
+            txtCodigoProduto.setText(null);
+            txtCodigoProduto.requestFocus();
+            codigoProduto = 0;
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void zeraFormulario() {
+        btnConsultarPedido.setEnabled(true);
+        btnIncluir.setEnabled(false);
+        btnAlterar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        txtNumPedido.setEditable(true);
+        fmtTxtCpfCliente.setEditable(false);
+        txtNomeCliente.setText(null);
+        btnConsultarCliente.setEnabled(false);
+        fmtTxtCpfVendedor.setEditable(false);
+        txtNomeVendedor.setText(null);
+        btnConsultarVendedor.setEnabled(false);
+        txtCodigoProduto.setEnabled(false);
+        btnConsultarProduto.setEnabled(false);
+        txtDescricaoProduto.setText(null);
+        txtDescricaoProduto.setEditable(false);
+        txtDescricaoProduto.setEnabled(false);
+        txtQtdeItensPedido.setEnabled(false);
+        txtQtdeItensPedido.setText(null);
+        btnAdicionarItem.setEnabled(false);
+        btnRemoverItem.setEnabled(false);
+    }
 }

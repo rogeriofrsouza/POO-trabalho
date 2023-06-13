@@ -24,19 +24,19 @@ public class DaoPedido {
 
         try {
             ps = conn.prepareStatement("INSERT INTO TB_PEDIDO ("
-                    + "DATA_EMISSAO,DATA_PAGAMENTO,FORMA_PAGAMENTO,SITUACAO,CLIENTE,VENDEDOR) "
-                    + "VALUES (?,?,?,?,?,?,?)");
+                    + "NUMERO, SITUACAO, DATA_EMISSAO,DATA_PAGTO,CPF_CLIENTE,CPF_VENDEDOR) "
+                    + "VALUES (?,?,?,?,?,?)");
             
-            ps.setString(1, pedido.getDataEmissao());
-            ps.setString(2, pedido.getDataPagto());
-            ps.setInt(3, pedido.getFormaPagto() ? 1 : 0);
-            ps.setInt(4, pedido.getSituacao() ? 1 : 0);
+            ps.setString(1, pedido.getNumero());
+            ps.setInt(2, pedido.getSituacao() ? 1 : 0);
+            ps.setString(3, pedido.getDataEmissao());
+            ps.setString(4, pedido.getDataPagto());
             ps.setString(5, pedido.getCliente().getCpf());
             ps.setString(6, pedido.getVendedor().getCpf());
             
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Falha inserir Pedido: " + ex.toString());
         }
     }
 

@@ -2,13 +2,13 @@ package fatec.poo.model;
 
 public class ItemPedido {
     
-    private int sequencia;
+    private Integer sequencia;
     private double qtdeVendida;
     
     private Pedido pedido;
     private Produto produto;
 
-    public ItemPedido(int sequencia, double qtdeVendida, Produto produto) {
+    public ItemPedido(Integer sequencia, double qtdeVendida, Produto produto) {
         this.sequencia = sequencia;
         this.produto = produto;
         

@@ -24,8 +24,8 @@ public class DaoItemPedido {
 
         try {
             ps = conn.prepareStatement("INSERT INTO TB_ITEM_PEDIDO ("
-                    + "QTDE_VENDIDA,PEDIDO,PRODUTO) "
-                    + "VALUES (?,?,?)");
+                    + "SEQUENCIA,QTDE_VENDIDA,NUM_PEDIDO,COD_PRODUTO) "
+                    + "VALUES (seq_item_pedido.NEXTVAL,?,?,?)");
             
             ps.setDouble(1, itemPedido.getQtdeVendida());
             ps.setString(2, itemPedido.getPedido().getNumero());
@@ -33,7 +33,7 @@ public class DaoItemPedido {
             
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+             System.out.println("Falha inserir Item Pedido: " + ex.toString());
         }
     }
 
@@ -42,7 +42,7 @@ public class DaoItemPedido {
         
         try {
             ps = conn.prepareStatement("UPDATE TB_ITEM_PEDIDO SET "
-                    + "QTDE_VENDIDA=?,PEDIDO=?,PRODUTO=?) "
+                    + "QTDE_VENDIDA=?,NUM_PEDIDO=?,COD_PRODUTO=?) "
                     + "WHERE SEQUENCIA = ?");
 
             ps.setDouble(1, itemPedido.getQtdeVendida());
@@ -90,7 +90,7 @@ public class DaoItemPedido {
         PreparedStatement ps = null;
         
         try {
-            ps = conn.prepareStatement("SELECT * FROM TB_ITEM_PEDIDO WHERE PEDIDO = ?");
+            ps = conn.prepareStatement("SELECT * FROM TB_ITEM_PEDIDO WHERE NUM_PEDIDO = ?");
             
             ps.setString(1, numeroPedido);
             ResultSet rs = ps.executeQuery();
@@ -105,6 +105,34 @@ public class DaoItemPedido {
         }
         
         return itens;
+    }
+    
+    public ItemPedido consultar(String numeroPedido, String codigo) {
+        DaoProduto daoProduto = new DaoProduto(conn);
+        DaoPedido daoPedido = new DaoPedido(conn);
+        ItemPedido itemPedido = null;
+
+        PreparedStatement ps = null;
+        
+        try {
+            ps = conn.prepareStatement("SELECT * FROM TB_ITEM_PEDIDO WHERE NUM_PEDIDO = ? AND COD_PRODUTO = ?");
+            
+            ps.setString(1, numeroPedido);
+            ps.setString(2, codigo);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Produto prod = daoProduto.consultar(rs.getString(3));
+                Pedido ped = daoPedido.consultar(rs.getString(2));
+                
+                itemPedido = new ItemPedido(rs.getInt(0), rs.getDouble(1), prod);
+                itemPedido.setPedido(ped);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Falha consultar Item Pedido: " + ex.toString());
+        }
+        
+        return itemPedido;
     }
 
     public void excluir(Produto produto) {
