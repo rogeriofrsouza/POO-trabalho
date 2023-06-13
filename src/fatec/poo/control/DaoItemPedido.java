@@ -96,12 +96,11 @@ public class DaoItemPedido {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                Produto produto = daoProduto.consultar(rs.getString("PRODUTO"));
-
+                Produto produto = daoProduto.consultar(rs.getString("COD_PRODUTO"));
                 itens.add(new ItemPedido(rs.getInt("SEQUENCIA"), rs.getDouble("QTDE_VENDIDA"), produto));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Erro Item Pedido: " + ex.toString());
         }
         
         return itens;
@@ -145,6 +144,19 @@ public class DaoItemPedido {
             ps.execute();
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }
+    }
+    
+    public void excluirByPedido(String numero) {
+        PreparedStatement ps = null;
+        
+        try {
+            ps = conn.prepareStatement("DELETE FROM TB_ITEM_PEDIDO WHERE NUM_PEDIDO = ?");
+
+            ps.setString(1, numero);
+            ps.execute();
+        } catch (SQLException ex) {
+            System.out.println("Falha excluir by Pedido: " + ex.toString());
         }
     }
 }

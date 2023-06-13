@@ -45,21 +45,21 @@ public class DaoPedido {
         
         try {
             ps = conn.prepareStatement("UPDATE TB_PEDIDO SET "
-                    + "DATA_EMISSAO=?,DATA_PAGAMENTO=?,FORMA_PAGAMENTO=?,SITUACAO=?,"
-                    + "CLIENTE=?,VENDEDOR=? "
+                    + "SITUACAO=?,DATA_EMISSAO=?,DATA_PAGTO=?,FORMA_PGTO=?,"
+                    + "CPF_CLIENTE=?,CPF_VENDEDOR=? "
                     + "WHERE NUMERO = ?");
 
-            ps.setString(1, pedido.getDataEmissao());
-            ps.setString(2, pedido.getDataPagto());
-            ps.setInt(3, pedido.getFormaPagto() ? 1 : 0);
-            ps.setInt(4, pedido.getSituacao() ? 1 : 0);
+            ps.setInt(1, pedido.getSituacao() ? 1 : 0);
+            ps.setString(2, pedido.getDataEmissao());
+            ps.setString(3, pedido.getDataPagto());
+            ps.setInt(4, pedido.getFormaPagto() ? 1 : 0);
             ps.setString(5, pedido.getCliente().getCpf());
             ps.setString(6, pedido.getVendedor().getCpf());
             ps.setString(7, pedido.getNumero());
 
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Falha alterar pedido: " + ex.toString());
         }
     }
 
@@ -79,22 +79,23 @@ public class DaoPedido {
 
             if (rs.next()) {
                 pedido = new Pedido(numero, rs.getString("DATA_EMISSAO"));
-                Cliente cliente = daoCliente.consultar(rs.getString("CLIENTE"));
-                Vendedor vendedor = daoVendedor.consultar(rs.getString("VENDEDOR"));
+                Cliente cliente = daoCliente.consultar(rs.getString("CPF_CLIENTE"));
+                Vendedor vendedor = daoVendedor.consultar(rs.getString("CPF_VENDEDOR"));
+                
+                cliente.addPedido(pedido);
+                vendedor.addPedido(pedido);
                 
                 List<ItemPedido> itens = daoItemPedido.consultarByPedido(numero);
                 for (ItemPedido item : itens) {
                     pedido.addItem(item);
                 }
                 
-                pedido.setCliente(cliente);
-                pedido.setVendedor(vendedor);
-                pedido.setFormaPagto(rs.getInt("FORMA") != 0);
+                pedido.setFormaPagto(rs.getInt("FORMA_PGTO") != 0);
                 pedido.setSituacao(rs.getInt("SITUACAO") != 0);
-                pedido.setDataPagto(rs.getString("DATA_PAGAMENTO"));
+                pedido.setDataPagto(rs.getString("DATA_PAGTO"));
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Erro consultar pedido: " + ex.toString());
         }
         
         return pedido;
@@ -109,7 +110,7 @@ public class DaoPedido {
             ps.setString(1, pedido.getNumero());
             ps.execute();
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            System.out.println("Falha excluir Pedido: " + ex.toString());
         }
     }
 }
